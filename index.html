@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIS3371 – Tanner Bell</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 60px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        header h1 {
+            font-size: 2rem;
+            color: #1a3a5c;
+        }
+        header p {
+            margin-top: 8px;
+            color: #555;
+            font-size: 1rem;
+        }
+        .cards {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+            padding: 36px 40px;
+            width: 280px;
+            text-align: center;
+            transition: transform 0.15s, box-shadow 0.15s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+        }
+        .card .badge {
+            display: inline-block;
+            background: #1a3a5c;
+            color: #fff;
+            border-radius: 20px;
+            padding: 4px 16px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 14px;
+        }
+        .card h2 {
+            font-size: 1.2rem;
+            color: #1a3a5c;
+            margin-bottom: 10px;
+        }
+        .card p {
+            font-size: 0.92rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        footer {
+            margin-top: 64px;
+            color: #aaa;
+            font-size: 0.82rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>MIS3371 – Web-Based Systems</h1>
+        <p>Tanner Bell &nbsp;|&nbsp; Houston Health Center Patient Intake Project</p>
+    </header>
+
+    <div class="cards">
+        <a class="card" href="homework3/homework3.html">
+            <span class="badge">Homework 3</span>
+            <h2>Patient Intake Form</h2>
+            <p>JavaScript validation, real-time error feedback, and review modal.</p>
+        </a>
+        <a class="card" href="homework4/index.html">
+            <span class="badge">Homework 4</span>
+            <h2>Enhanced Intake Form</h2>
+            <p>FAQ iframe, dynamic state dropdown populated from JSON, and full validation.</p>
+        </a>
+    </div>
+
+    <footer>MIS3371 &copy; 2026 Tanner Bell</footer>
+
+</body>
+</html>
