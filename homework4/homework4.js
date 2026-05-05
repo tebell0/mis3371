@@ -1,3 +1,164 @@
+// ─── Cookie Helpers ───────────────────────────────────────────────────────────
+function setCookie(name, value, hours) {
+    const expires = new Date(Date.now() + hours * 36e5).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+}
+
+function getCookie(name) {
+    const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : null;
+}
+
+function deleteCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+}
+
+// ─── Local Storage Keys ───────────────────────────────────────────────────────
+const LS_FIELDS = [
+    'first_name', 'middle_initial', 'last_name', 'dob', 'ssn', 'phone',
+    'email', 'address', 'address2', 'city', 'state', 'zip',
+    'insurance', 'policy_number', 'description', 'user_id'
+];
+const LS_CHECKS = ['diabetes','hypertension','heart_disease','asthma','chicken_pox',
+                   'mumps','small_pox','COVID-19','Tetanus','measles'];
+const LS_RADIOS = { age_group: ['child','adult','senior'], vaccinated: ['vaccinated'] };
+
+// Save a single field's value to localStorage immediately
+function saveField(id) {
+    const el = document.getElementById(id);
+    if (el) {
+        if (el.type === 'checkbox') {
+            localStorage.setItem(id, el.checked);
+        } else {
+            localStorage.setItem(id, el.value);
+        }
+    }
+}
+
+function saveRadioGroup(name) {
+    const checked = document.querySelector(`input[name="${name}"]:checked`);
+    localStorage.setItem(name, checked ? checked.value : '');
+}
+
+function loadLocalData() {
+    LS_FIELDS.forEach(id => {
+        const el = document.getElementById(id);
+        const val = localStorage.getItem(id);
+        if (el && val !== null) el.value = val;
+    });
+    LS_CHECKS.forEach(id => {
+        const el = document.getElementById(id);
+        const val = localStorage.getItem(id);
+        if (el && val !== null) el.checked = (val === 'true');
+    });
+    Object.keys(LS_RADIOS).forEach(name => {
+        const val = localStorage.getItem(name);
+        if (val) {
+            const radio = document.querySelector(`input[name="${name}"][value="${val}"]`);
+            if (radio) radio.checked = true;
+        }
+    });
+}
+
+function clearLocalData() {
+    [...LS_FIELDS, ...LS_CHECKS, ...Object.keys(LS_RADIOS), 'remember_me']
+        .forEach(k => localStorage.removeItem(k));
+}
+
+// ─── Welcome Message ──────────────────────────────────────────────────────────
+const welcomeMsg = document.getElementById('welcome_msg');
+const notYouBtn  = document.getElementById('not_you_btn');
+const notYouName = document.getElementById('not_you_name');
+
+function updateWelcome(firstName) {
+    if (firstName) {
+        welcomeMsg.textContent  = `Welcome back, ${firstName}!`;
+        notYouName.textContent  = firstName;
+        notYouBtn.style.display = 'inline-block';
+    } else {
+        welcomeMsg.textContent  = 'Welcome New User!';
+        notYouBtn.style.display = 'none';
+    }
+}
+
+// ─── Returning User Confirmation ──────────────────────────────────────────────
+const rememberMe     = document.getElementById('remember_me');
+const returningModal = document.getElementById('returning_modal');
+const returningMsg   = document.getElementById('returning_modal_msg');
+const returningYes   = document.getElementById('returning_yes');
+const returningNo    = document.getElementById('returning_no');
+
+const cookieName = getCookie('first_name');
+const hasLocalData = localStorage.getItem('first_name') !== null;
+
+if (cookieName && hasLocalData) {
+    // Returning user — ask for confirmation before restoring
+    returningMsg.textContent = `Welcome back, ${cookieName}! We found saved form data. Would you like to restore it?`;
+    returningModal.style.display = 'flex';
+
+    returningYes.addEventListener('click', function () {
+        returningModal.style.display = 'none';
+        loadLocalData();
+        rememberMe.checked = localStorage.getItem('remember_me') === 'true';
+        updateWelcome(cookieName);
+    });
+
+    returningNo.addEventListener('click', function () {
+        returningModal.style.display = 'none';
+        deleteCookie('first_name');
+        clearLocalData();
+        rememberMe.checked = false;
+        updateWelcome(null);
+    });
+} else {
+    updateWelcome(cookieName || null);
+}
+
+// ─── Remember Me checkbox ─────────────────────────────────────────────────────
+rememberMe.addEventListener('change', function () {
+    if (this.checked) {
+        localStorage.setItem('remember_me', 'true');
+        const firstName = document.getElementById('first_name').value.trim();
+        if (firstName) setCookie('first_name', firstName, 36);
+    } else {
+        deleteCookie('first_name');
+        clearLocalData();
+        updateWelcome(null);
+    }
+});
+
+// ─── Auto-save on blur for all fields ────────────────────────────────────────
+LS_FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('blur', () => saveField(id));
+});
+LS_CHECKS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('change', () => saveField(id));
+});
+Object.keys(LS_RADIOS).forEach(name => {
+    document.querySelectorAll(`input[name="${name}"]`).forEach(r =>
+        r.addEventListener('change', () => saveRadioGroup(name))
+    );
+});
+
+// Update cookie + welcome when first name is committed (blur)
+document.getElementById('first_name').addEventListener('blur', function () {
+    const val = this.value.trim();
+    saveField('first_name');
+    if (rememberMe.checked && val) setCookie('first_name', val, 36);
+    updateWelcome(val || null);
+});
+
+// "Not you?" button — wipe everything and reset
+notYouBtn.addEventListener('click', function () {
+    deleteCookie('first_name');
+    clearLocalData();
+    rememberMe.checked = false;
+    document.getElementById('first_name').value = '';
+    updateWelcome(null);
+});
+
 // ─── Populate State Dropdown from states.json ────────────────────────────────
 fetch('states.json')
     .then(response => response.json())

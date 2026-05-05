@@ -8,9 +8,11 @@
     <body>
         <!--Page Header-->
         <div id="header">
-            <img id="logo" src="medsymbolnobg.png" alt="Houston Health Center Logo">
+            <img id="logo" src="medsymbolnobg2.png" alt="Houston Health Center Logo">
             <h1 id="h1">Houston Health Center</h1>
             <p>Welcome to the Houston Health Center!</p>
+            <p id="welcome_msg" class="date-line"></p>
+            <button type="button" id="not_you_btn" style="display:none;">Not <span id="not_you_name"></span>? Click here to restart the form as a new user.</button>
             <p class="date-line">Date: <span id="current_date"></span></p>
         </div>
 
@@ -61,7 +63,7 @@
                             <input type="text" id="dob" name="dob" placeholder="Date of Birth (MM/DD/YYYY)">
                             <span class="error-msg" id="error_dob"></span>
                             <label for="ssn">SSN:</label>
-                            <input type="text" id="ssn" name="ssn" placeholder="SSN (XXX-XX-XXXX)">
+                            <input type="password" id="ssn" name="ssn" placeholder="SSN (XXX-XX-XXXX)" autocomplete="off">
                             <span class="error-msg" id="error_ssn"></span>
                             <label for="phone">Phone:</label>
                             <input type="text" id="phone" name="phone" placeholder="Phone Number (XXX-XXX-XXXX)">
@@ -191,6 +193,11 @@
 
                 <!--Section 6: UserID and Password Creation-->
 
+                <label>
+                    <input type="checkbox" id="remember_me" name="remember_me">
+                    Remember Me — save my name and form data for next visit
+                </label><br><br>
+
                 <label for="user_id">User ID:</label>
                 <input type="text" id="user_id" name="user_id">
                 <span class="error-msg" id="error_user_id"></span><br><br>
@@ -220,6 +227,15 @@
                 <a href="https://www.facebook.com/" target="_blank" style="margin: 0 10px;">Facebook</a>
                 <a href="https://x.com/" target="_blank" style="margin: 0 10px;">X</a>
             </div>
+
+        <!-- Returning User Confirmation Modal -->
+        <div id="returning_modal" style="display:none;">
+            <div id="returning_modal_box">
+                <p id="returning_modal_msg"></p>
+                <button type="button" id="returning_yes">Yes, restore my data</button>
+                <button type="button" id="returning_no">No, start fresh</button>
+            </div>
+        </div>
 
         <script src="homework4.js"></script>
     </body>

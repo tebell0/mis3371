@@ -43,19 +43,27 @@ body {
     font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
     min-height: 100vh;
+    padding-top: 220px;
+    padding-bottom: 100px;
 }
 
 #header {
     text-align: center;
-    margin-top: 30px;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #111;
+    z-index: 1000;
+    padding: 12px 0 10px 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
 }
 
 #logo {
     display: block;
-    width: 120px;
+    width: 60px;
     height: auto;
-    margin: 0 auto 12px auto;
+    margin: 0 auto 6px auto;
 }
 
 #h1 {
@@ -210,8 +218,15 @@ input[type="button"]:hover, #review_button:hover {
 #footer {
     text-align: center;
     color: #fff;
-    margin-top: 40px;
     font-size: 1.1rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #111;
+    padding: 12px 0;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.5);
+    z-index: 1000;
 }
 
 .date-line {
@@ -220,12 +235,84 @@ input[type="button"]:hover, #review_button:hover {
     margin-bottom: 12px;
 }
 
+#not_you_btn {
+    background: transparent;
+    color: #ff9999;
+    border: 1px solid #ff9999;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+
+#not_you_btn:hover {
+    background: #ff9999;
+    color: #111;
+}
+
+#remember_me {
+    accent-color: #ff4444;
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+label:has(#remember_me) {
+    color: #ccc;
+    font-size: 0.92rem;
+    cursor: pointer;
+}
+
 @media (max-width: 900px) {
     .form-table, #patient_info_header {
         width: 95%;
         padding: 16px;
     }
 }
+
+/* ── Returning User Confirmation Modal ───────────────────────────────────── */
+#returning_modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#returning_modal_box {
+    background: #222;
+    border: 1px solid #555;
+    border-radius: 12px;
+    padding: 36px 44px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    max-width: 420px;
+    width: 90%;
+}
+
+#returning_modal_box p {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+}
+
+#returning_yes, #returning_no {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin: 0 8px;
+    transition: background 0.2s;
+}
+
+#returning_yes  { background: #b30000; color: #fff; }
+#returning_yes:hover  { background: #e60000; }
+#returning_no   { background: #444; color: #fff; }
+#returning_no:hover   { background: #666; }
 
 /* ── Validation error styles ─────────────────────────────────────────────── */
 input.field-error,
