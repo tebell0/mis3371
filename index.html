@@ -71,6 +71,21 @@
             color: #666;
             line-height: 1.5;
         }
+        .card .meta {
+            margin-top: 14px;
+            font-size: 0.78rem;
+            color: #999;
+        }
+        .status {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+        .status.complete { background: #d4edda; color: #155724; }
         footer {
             margin-top: 64px;
             color: #aaa;
@@ -86,15 +101,33 @@
     </header>
 
     <div class="cards">
+        <a class="card" href="homework1.html">
+            <span class="badge">Homework 1</span>
+            <h2>Basic Patient Form</h2>
+            <p>Initial HTML form layout for the Houston Health Center patient intake.</p>
+            <div class="meta">Due: —</div>
+            <span class="status complete">&#10003; Complete</span>
+        </a>
+        <a class="card" href="homework2.html">
+            <span class="badge">Homework 2</span>
+            <h2>Styled Patient Form</h2>
+            <p>CSS styling and layout improvements applied to the patient intake form.</p>
+            <div class="meta">Due: —</div>
+            <span class="status complete">&#10003; Complete</span>
+        </a>
         <a class="card" href="homework3/homework3.html">
             <span class="badge">Homework 3</span>
             <h2>Patient Intake Form</h2>
             <p>JavaScript validation, real-time error feedback, and review modal.</p>
+            <div class="meta">Due: —</div>
+            <span class="status complete">&#10003; Complete</span>
         </a>
         <a class="card" href="homework4/index.html">
             <span class="badge">Homework 4</span>
             <h2>Enhanced Intake Form</h2>
-            <p>FAQ iframe, dynamic state dropdown populated from JSON, and full validation.</p>
+            <p>FAQ iframe, dynamic state dropdown, cookies, localStorage, and full validation.</p>
+            <div class="meta">Due: May 8, 2026</div>
+            <span class="status complete">&#10003; Complete</span>
         </a>
     </div>
 
